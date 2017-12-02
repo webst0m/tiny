@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChageTagsTable extends Migration
+class ChangeUserLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChageTagsTable extends Migration
      */
     public function up()
     {
-        Schema::table('tags', function (Blueprint $table) {
-            $table->dropColumn(['created_at', 'updated_at']);
+        Schema::table('user_logs', function (Blueprint $table) {
+            $table->text('changes')->comment('操作变化')->change();
         });
     }
 
@@ -25,8 +25,8 @@ class ChageTagsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tags', function (Blueprint $table) {
-            //
+        Schema::table('user_logs', function (Blueprint $table) {
+
         });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChageUserLogsTable extends Migration
+class ChangePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChageUserLogsTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_logs', function (Blueprint $table) {
-            $table->text('changes')->comment('操作变化')->change();
+        Schema::table('permissions', function (Blueprint $table) {
+            $table->dropColumn(['parent_id', 'is_menu']);
         });
     }
 
@@ -25,8 +25,8 @@ class ChageUserLogsTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_logs', function (Blueprint $table) {
-
+        Schema::table('permissions', function (Blueprint $table) {
+            //
         });
     }
 }
