@@ -62,4 +62,12 @@ class User extends BaseModel implements
         return $this->posts()->count();
     }
 
+    /**
+     * 该用户可操作的分类
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
 }

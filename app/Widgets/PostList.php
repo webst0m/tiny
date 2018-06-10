@@ -38,10 +38,10 @@ class PostList extends AbstractWidget
 
         }
         if ($category->exists) {
-            $posts = Post::applyFilter(collect([
+            $posts = Post::applyFilter([
                 'category_id' => $category->id,
                 'status' => $this->config['status']
-            ]))->limit($this->config['limit'])->get();
+            ])->limit($this->config['limit'])->get();
         } else {
             $posts = collect();
         }
