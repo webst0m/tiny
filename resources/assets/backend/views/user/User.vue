@@ -18,17 +18,18 @@
           <UploadPicture  @on-remove="() => formData.avatar = null" @on-success="avatar => formData.avatar = avatar" :url="formData.avatar_url" height="180px" class="upload_picture" />
         </Form-item>
       </Form>
-      <FormButtomGroup />
+      <FormButtonGroup />
     </Panel>
   </div>
 </template>
 <script>
 import Panel from '../../components/Panel.vue';
 import fromMixin from '../../mixins/form';
-import FormButtomGroup from '../../components/FormButtonGroup.vue';
+import FormButtonGroup from '../../components/FormButtonGroup.vue';
 import UploadPicture from '../../components/UploadPicture.vue';
+import CategoryMultiSelect from '../../components/CategoryMultiSelect.vue';
 export default {
-  components: { Panel, FormButtomGroup, UploadPicture },
+  components: { Panel, FormButtonGroup, UploadPicture, CategoryMultiSelect },
   mixins: [ fromMixin ],
   computed: {
     rules () {
