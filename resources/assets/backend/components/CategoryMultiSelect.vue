@@ -33,11 +33,7 @@
       }
     },
     mounted () {
-      this.$http.get('categories', {
-        params: {
-          type: 'post'
-        }
-      }).then(res => {
+      this.$http.get('categories').then(res => {
         this.categories = res.data.data.map(item => {
           let children;
           if (item.children) {
