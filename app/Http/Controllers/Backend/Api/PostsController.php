@@ -9,6 +9,7 @@ use App\Http\Requests\Backend\PostRequest;
 use App\Models\Post;
 use App\Repositories\PostRepository;
 use App\Transformers\Backend\PostTransformer;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class PostsController extends ApiController
 {
@@ -27,7 +28,22 @@ class PostsController extends ApiController
      */
     public function index(PostRequest $request)
     {
-        $posts = Post::applyFilter($request)
+        $user = auth()->user();
+        $param = $request->all();
+        if (isset($param['category_id']) && !intval($param['category_id'])){
+            unset($param['category_id']);
+        }
+        if (!$user->hasRole('super_admin')) {
+            $categoryIds = $user->categories->pluck('id')->toArray();
+            if (isset($param['category_id'])) {
+                if (!in_array($param['category_id'], $categoryIds)) {
+                    throw new AuthorizationException('没有权限');
+                }
+            } else {
+                $param['category_id'] = $categoryIds;
+            }
+        }
+        $posts = Post::applyFilter($param)
             ->withSimpleSearch()
             ->withSort()
             ->paginate($this->perPage());

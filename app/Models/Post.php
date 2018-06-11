@@ -37,7 +37,7 @@ class Post extends BaseModel implements PresentableInterface
 
     public function scopeApplyFilter($query, $data)
     {
-        $data = $data->only('status', 'only_trashed', 'category_id');
+        $data = array_only($data, ['status', 'only_trashed', 'category_id']);
         $query->orderByTop()
             ->byCategory(isset($data['category_id']) ? $data['category_id'] : null)
             ->byType(Category::TYPE_POST)
@@ -51,13 +51,17 @@ class Post extends BaseModel implements PresentableInterface
 
     public function scopeByCategory($query, $category)
     {
+        if (is_array($category)) {
+            return $query->whereIn('category_id', $category);
+        }
+
         if ($category instanceof Category) {
             $category = $category->id;
         } else {
             $category = intval($category);
         }
         if ($category)
-            $query->where('category_id', $category);
+            return $query->where('category_id', $category);
     }
 
 
