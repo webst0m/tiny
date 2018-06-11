@@ -45,6 +45,8 @@ class UserRepository extends BaseRepository
                 } catch (RoleDoesNotExist $e) {
                     throw new ResourceException(null, ['roles' => '所选的角色不存在']);
                 }
+            }else{
+                $user->assignRole(1);
             }
 
             if (!empty($data['permissions'])) {
