@@ -34,7 +34,12 @@ class UsersController extends ApiController
 
     public function store(UserRequest $request, UserRepository $userRepository)
     {
-        $userRepository->create($request->validated());
+        $data = $request->validated();
+        $isSuperAdmin = auth()->user()->hasRole('super_admin');
+        if (!$isSuperAdmin) {
+            unset($data['categories']);
+        }
+        $userRepository->create($data);
         return $this->response()->noContent();
     }
 
@@ -50,7 +55,12 @@ class UsersController extends ApiController
 
     public function update(User $user, UserRequest $request, UserRepository $userRepository)
     {
-        $userRepository->update($request->validated(), $user);
+        $data = $request->validated();
+        $isSuperAdmin = auth()->user()->hasRole('super_admin');
+        if (!$isSuperAdmin) {
+            unset($data['categories']);
+        }
+        $userRepository->update($data, $user);
         return $this->response()->noContent();
     }
 

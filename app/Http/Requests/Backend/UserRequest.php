@@ -34,7 +34,7 @@ class UserRequest extends Request
                     'avatar' => ['bail', 'nullable', new ImageName(), new ImageNameExist()],
                     'roles' => ['nullable', 'array'],
                     'permissions' => ['nullable', 'array'],
-                    'categories' => ['nullbale', 'array']
+                    'categories' => ['nullable', 'array']
                 ];
             case 'PUT':
             case 'PATCH':
@@ -47,7 +47,7 @@ class UserRequest extends Request
                     'avatar' => ['bail', 'nullable', new ImageName(), new ImageNameExist()],
                     'roles' => ['nullable', 'array'],
                     'permissions' => ['nullable', 'array'],
-                    'categories' => ['nullbale', 'array']
+                    'categories' => ['nullable', 'array']
                 ];
             default:
                 return [];

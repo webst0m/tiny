@@ -18,7 +18,7 @@
           <UploadPicture  @on-remove="() => formData.avatar = null" @on-success="avatar => formData.avatar = avatar" :url="formData.avatar_url" height="180px" class="upload_picture" />
         </Form-item>
         <Form-item label="允许编辑栏目" :error="errors.categories">
-          <CategoryMultiSelect @category_change="categoryChange"/>
+          <CategoryMultiSelect ref="CategoryMultiSelect" @category_change="categoryChange"/>
         </Form-item>
       </Form>
       <FormButtonGroup />
@@ -63,13 +63,18 @@ export default {
     }
   },
   methods: {
-    categoryChange (categorys) {
-      this.formData.categories = categorys.map(item => item.id);
+    categoryChange (categories) {
+      this.formData.categories = categories.map(item => item.id);
     }
   },
   mounted () {
     this.$on('on-success', () => {
       this.$router.push({name: 'userList'});
+    });
+    this.$on('on-data', () => {
+      this.formData.categories = this.formData.categories.data.map(item => item.id);
+      this.diffSave(this.formData);
+      this.$refs['CategoryMultiSelect'].setCurrentCategories(this.formData.categories);
     });
   },
   data () {

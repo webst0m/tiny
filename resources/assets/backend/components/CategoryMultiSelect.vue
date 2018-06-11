@@ -9,12 +9,27 @@
     name: 'CategoryMultiSelect',
     data () {
       return {
-        categories: []
+        categories: [],
+        currentCategories: []
       };
     },
     methods: {
-      onCheckChange (categorys) {
-        this.$emit('category_change', categorys.filter(item => item.canSelect));
+      onCheckChange (categories) {
+        this.$emit('category_change', categories.filter(item => item.canSelect));
+      },
+      checkoutCategory () {
+        this.categories.map(item => {
+          if (item.children) {
+            item.children.map(cItem => {
+              cItem.checked = cItem.canSelect && (this.currentCategories.find(c => c === cItem.id) !== undefined);
+            });
+          }
+          item.checked = item.canSelect && (this.currentCategories.find(c => c === item.id) !== undefined);
+        });
+      },
+      setCurrentCategories (currentCategories) {
+        this.currentCategories = currentCategories;
+        this.checkoutCategory();
       }
     },
     mounted () {
@@ -41,6 +56,7 @@
             id: item.id
           };
         });
+        this.checkoutCategory();
       });
     }
   };
