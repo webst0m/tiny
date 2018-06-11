@@ -14,7 +14,7 @@
         <Form-item label="排序" :error="errors.order">
           <InputNumber v-model="formData.order"></InputNumber>
         </Form-item>
-        <FormButtomGroup />
+        <FormButtonGroup />
       </Form>
     </Panel>
   </div>
@@ -23,9 +23,9 @@
 <script>
 import Panel from '../../components/Panel.vue';
 import fromMixin from '../../mixins/form';
-import FormButtomGroup from '../../components/FormButtonGroup.vue';
+import FormButtonGroup from '../../components/FormButtonGroup.vue';
 export default {
-  components: { Panel, FormButtomGroup },
+  components: { Panel, FormButtonGroup },
   mixins: [ fromMixin ],
   computed: {
     rules () {
