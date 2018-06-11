@@ -2,17 +2,17 @@
   <div class="page">
     <h1 class="title">编辑{{title}}</h1>
     <TitleWithContent :titleError="errors.title" :contentError="errors.content" :title.sync="formData.title" :content.sync="formData.content"></TitleWithContent>
-    <FormButtomGroup />
+    <FormButtonGroup />
   </div>
 </template>
 
 <script>
-import FormButtomGroup from '../../components/FormButtonGroup.vue';
+import FormButtonGroup from '../../components/FormButtonGroup.vue';
 import TitleWithContent from '../../components/TitleWithContent.vue';
 import Diff from '../../utils/Diff';
 let mainDiff = new Diff();
 export default {
-  components: { TitleWithContent, FormButtomGroup },
+  components: { TitleWithContent, FormButtonGroup },
   data () {
     return {
       title: '单页',

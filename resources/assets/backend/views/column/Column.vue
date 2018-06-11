@@ -58,7 +58,7 @@
             <span slot="close">否</span>
           </i-switch>
         </Form-item>
-        <FormButtomGroup />
+        <FormButtonGroup />
       </Form>
     </Panel>
   </div>
@@ -67,10 +67,10 @@
 <script>
 import Panel from '../../components/Panel.vue';
 import fromMixin from '../../mixins/form';
-import FormButtomGroup from '../../components/FormButtonGroup.vue';
+import FormButtonGroup from '../../components/FormButtonGroup.vue';
 import UploadPicture from '../../components/UploadPicture.vue';
 export default {
-  components: { Panel, FormButtomGroup, UploadPicture },
+  components: { Panel, FormButtonGroup, UploadPicture },
   mixins: [ fromMixin ],
   computed: {
     rules () {

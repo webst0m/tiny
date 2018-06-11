@@ -5,7 +5,7 @@
         <Form-item :error="errors.name" label="标签" prop="name">
           <Input v-model="formData.name" placeholder="请设置标签"></Input>
         </Form-item>
-        <FormButtomGroup />
+        <FormButtonGroup />
       </Form>
     </Panel>
   </div>
@@ -14,9 +14,9 @@
 <script>
 import Panel from '../../components/Panel.vue';
 import fromMixin from '../../mixins/form';
-import FormButtomGroup from '../../components/FormButtonGroup.vue';
+import FormButtonGroup from '../../components/FormButtonGroup.vue';
 export default {
-  components: { Panel, FormButtomGroup },
+  components: { Panel, FormButtonGroup },
   mixins: [ fromMixin ],
   computed: {
     rules () {

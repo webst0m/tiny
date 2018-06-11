@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <Panel :title="title">
-      <Form ref="form" :rules="rules" :model="formData" :label-width="80">
+      <Form ref="form" :rules="rules" :model="formData" :label-width="100">
         <Form-item label="用户名" prop="user_name" :error="errors.user_name">
           <Input v-model="formData.user_name" placeholder="请设置用户名"></Input>
         </Form-item>
@@ -17,18 +17,22 @@
         <Form-item label="头像" :error="errors.avatar">
           <UploadPicture  @on-remove="() => formData.avatar = null" @on-success="avatar => formData.avatar = avatar" :url="formData.avatar_url" height="180px" class="upload_picture" />
         </Form-item>
+        <Form-item label="允许编辑栏目" :error="errors.categories">
+          <CategoryMultiSelect ref="CategoryMultiSelect" @category_change="categoryChange"/>
+        </Form-item>
       </Form>
-      <FormButtomGroup />
+      <FormButtonGroup />
     </Panel>
   </div>
 </template>
 <script>
 import Panel from '../../components/Panel.vue';
 import fromMixin from '../../mixins/form';
-import FormButtomGroup from '../../components/FormButtonGroup.vue';
+import FormButtonGroup from '../../components/FormButtonGroup.vue';
 import UploadPicture from '../../components/UploadPicture.vue';
+import CategoryMultiSelect from '../../components/CategoryMultiSelect.vue';
 export default {
-  components: { Panel, FormButtomGroup, UploadPicture },
+  components: { Panel, FormButtonGroup, UploadPicture, CategoryMultiSelect },
   mixins: [ fromMixin ],
   computed: {
     rules () {
@@ -51,13 +55,26 @@ export default {
     mixinConfig () {
       return {
         title: '用户',
+        query: {
+          include: 'categories'
+        },
         action: this.isAdd() ? 'users' : `users/${this.$route.params.id}`,
       };
+    }
+  },
+  methods: {
+    categoryChange (categories) {
+      this.formData.categories = categories.map(item => item.id);
     }
   },
   mounted () {
     this.$on('on-success', () => {
       this.$router.push({name: 'userList'});
+    });
+    this.$on('on-data', () => {
+      this.formData.categories = this.formData.categories.data.map(item => item.id);
+      this.diffSave(this.formData);
+      this.$refs['CategoryMultiSelect'].setCurrentCategories(this.formData.categories);
     });
   },
   data () {
@@ -69,7 +86,8 @@ export default {
         'email': null,
         'avatar': null,
         'roles': null,
-        'permissions': null
+        'permissions': null,
+        'categories': null,
       }
     };
   }

@@ -56,8 +56,7 @@ class UserRepository extends BaseRepository
                     throw new ResourceException(null, ['roles' => '所选的权限不存在']);
                 }
             }
-            $isSuperAdmin = $user->hasRole('super_admin');
-            if ($isSuperAdmin && !empty($data['categories'])) {
+            if (!empty($data['categories'])) {
                 $user->categories()->sync($data['categories']);
             }
         });
@@ -93,8 +92,7 @@ class UserRepository extends BaseRepository
             }
         }
 
-        $isSuperAdmin = $user->hasRole('super_admin');
-        if ($isSuperAdmin && !empty($data['categories'])) {
+        if (!empty($data['categories'])) {
             $user->categories()->sync($data['categories']);
         }
     }
