@@ -17,6 +17,7 @@ class MeController extends ApiController
 
     public function show()
     {
-        return $this->response()->item(Auth::user(), new UserTransformer());
+        $user = Auth::user();
+        return $this->response()->item($user, new UserTransformer())->addMeta('is_super_admin', $user->hasRole('super_admin'));
     }
 }

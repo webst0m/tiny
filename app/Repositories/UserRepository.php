@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 
 use App\Exceptions\ResourceException;
+use App\Models\Category;
 use App\Models\User;
 use Hash;
 use DB;
@@ -28,6 +29,16 @@ class UserRepository extends BaseRepository
     {
         if (isset($data['nick_name']))
             $data['nick_name'] = e($data['nick_name']);
+        if (isset($data['categories'])) {
+            $categories = Category::find($data['categories']);
+            foreach ($categories as $category) {
+                if (!$category->isTopCategory()) {
+                    if (!in_array($category->parent_id, $data['categories'])) {
+                        $data['categories'][] = $category->parent_id;
+                    }
+                }
+            }
+        }
         return $data;
     }
 
@@ -45,7 +56,7 @@ class UserRepository extends BaseRepository
                 } catch (RoleDoesNotExist $e) {
                     throw new ResourceException(null, ['roles' => '所选的角色不存在']);
                 }
-            }else{
+            } else {
                 $user->assignRole(1);
             }
 
