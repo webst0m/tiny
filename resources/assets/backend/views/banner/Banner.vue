@@ -27,7 +27,7 @@
           <p class="tip">不设置表示永久显示</p>
         </Form-item>
       </Form>
-      <FormButtomGroup />
+      <FormButtonGroup />
     </Panel>
   </div>
 </template>
@@ -35,10 +35,10 @@
 <script>
 import Panel from '../../components/Panel.vue';
 import fromMixin from '../../mixins/form';
-import FormButtomGroup from '../../components/FormButtonGroup.vue';
+import FormButtonGroup from '../../components/FormButtonGroup.vue';
 import UploadPicture from '../../components/UploadPicture.vue';
 export default {
-  components: { Panel, FormButtomGroup, UploadPicture },
+  components: { Panel, FormButtonGroup, UploadPicture },
   mixins: [ fromMixin ],
   computed: {
     rules () {
