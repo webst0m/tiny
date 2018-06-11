@@ -3,6 +3,12 @@
 </template>
 <script>
 export default {
+  data () {
+    return {
+      me: {
+      }
+    };
+  }
 };
 </script>
 // todo image onerror

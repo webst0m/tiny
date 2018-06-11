@@ -17,7 +17,7 @@
         <Form-item label="头像" :error="errors.avatar">
           <UploadPicture  @on-remove="() => formData.avatar = null" @on-success="avatar => formData.avatar = avatar" :url="formData.avatar_url" height="180px" class="upload_picture" />
         </Form-item>
-        <Form-item label="允许编辑栏目" :error="errors.categories">
+        <Form-item v-show="$root.me.is_super_admin" label="允许编辑栏目" :error="errors.categories">
           <CategoryMultiSelect ref="CategoryMultiSelect" @category_change="categoryChange"/>
         </Form-item>
       </Form>
