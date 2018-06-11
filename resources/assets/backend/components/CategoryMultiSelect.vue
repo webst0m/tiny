@@ -24,7 +24,7 @@
               cItem.checked = cItem.canSelect && (this.currentCategories.find(c => c === cItem.id) !== undefined);
             });
           }
-          item.checked = item.canSelect && (this.currentCategories.find(c => c === item.id) !== undefined);
+          item.checked = item.canSelect && this.currentCategories.find(c => c === item.id) !== undefined;
         });
       },
       setCurrentCategories (currentCategories) {
@@ -45,6 +45,7 @@
               return {
                 title: childrenItem.cate_name,
                 canSelect: true,
+                checked: false,
                 id: childrenItem.id
               };
             });
@@ -52,6 +53,7 @@
           return {
             title: item.cate_name,
             children,
+            checked: false,
             canSelect: children.length === 0,
             id: item.id
           };
