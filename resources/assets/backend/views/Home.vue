@@ -4,7 +4,7 @@
       <Logo size="small" class="logo"></Logo>
       <div class="content">
         <div class="user">
-          <UserInfo @log_out="logOut" :info="me"></UserInfo>
+          <UserInfo @log_out="logOut" :info="$root.me"></UserInfo>
         </div>
         <Menu-item @click.native="gotoFrontend" class="menu_item" name="frontend"><Icon type="home"></Icon>网站首页</Menu-item>
       </div>
@@ -27,7 +27,7 @@
           <Icon type="ios-people"></Icon>
           用户管理
         </template>
-        <Menu-item name="userList">用户列表</Menu-item>
+        <Menu-item v-if="$root.me.is_super_admin" name="userList">用户列表</Menu-item>
         <Menu-item name="roleList">角色列表</Menu-item>
       </Submenu>
       <Menu-item name="settingList"><Icon type="gear-a"></Icon>站点设置</Menu-item>
@@ -50,7 +50,6 @@ export default {
   data () {
     return {
       currentActiveKey: this.$route.name,
-      me: {},
       horizontalActiveName: ''
     };
   },
@@ -82,7 +81,8 @@ export default {
   mounted () {
     this.frontendUrl = getFrontendUrl();
     this.$http.get('me').then(res => {
-      this.me = res.data.data;
+      this.$root.me = res.data.data;
+      this.$root.me.is_super_admin = res.data.meta.is_super_admin;
     });
   }
 };

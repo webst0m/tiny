@@ -3,7 +3,7 @@
     <header>
       <h1 class="title">栏目列表</h1>
       <div class="option">
-        <span><Button @click="$router.push({name: 'addColumn'})" icon="plus-round" type="primary">添加</Button></span>
+        <span><Button v-show="$root.me.is_super_admin" @click="$router.push({name: 'addColumn'})" icon="plus-round" type="primary">添加</Button></span>
       </div>
     </header>
     <TTable :columns="columCol" :data="categories" />
