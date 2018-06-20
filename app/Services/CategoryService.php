@@ -1,6 +1,5 @@
 <?php
 namespace App\Services;
-
 use App\Models\Category;
 class CategoryService
 {
@@ -15,11 +14,12 @@ class CategoryService
             $canAccessCategoryIDs = collect([]);
         }
         $topicCategories = Category::topCategories()->ordered()->oldest()->get();
-		/*foreach($topicCategories as $k=>$topicCategory) {
+        foreach($topicCategories as $k=>$topicCategory) {
             if(!$isSuperAdmin && !$canAccessCategoryIDs->contains($topicCategory->id)){
-                $topicCategories->splice($k ,1);
+                // $topicCategories->splice($k ,1);
+				unset($topicCategories[$k]);
             }
-        }*/
+        }
         $topicCategories->load(['children' => function ($query) use ($type) {
             $query->byType($type)->ordered()->oldest();
         }]);
@@ -29,14 +29,10 @@ class CategoryService
             });
         }
         
-		
-        foreach($topicCategories as $key=>$topicCategory) {
-			if(!$isSuperAdmin && !$canAccessCategoryIDs->contains($topicCategory->id)){
-                unset($topicCategories[$key]);
-            }
+        foreach($topicCategories as $topicCategory) {
             foreach ($topicCategory->children as $k=>$child){
                 if(!$isSuperAdmin && !$canAccessCategoryIDs->contains($child->id)){
-                    //$topicCategory->children->splice($k ,1);
+                    // $topicCategory->children->splice($k ,1);
 					unset($topicCategory->children[$k]);
                 } 
             }
