@@ -22,13 +22,13 @@
         <Menu-item name="linkList">链接管理</Menu-item>
         <Menu-item name="tagList">标签管理</Menu-item>
       </Submenu>
-      <Submenu name="user">
+      <Submenu v-if="$root.me.is_super_admin" name="user">
         <template slot="title">
           <Icon type="ios-people"></Icon>
           用户管理
         </template>
-        <Menu-item v-if="$root.me.is_super_admin" name="userList">用户列表</Menu-item>
-        <Menu-item name="roleList" v-if="$root.me.is_super_admin">角色列表</Menu-item>
+        <Menu-item name="userList">用户列表</Menu-item>
+        <Menu-item name="roleList">角色列表</Menu-item>
       </Submenu>
       <Menu-item name="settingList"><Icon type="gear-a"></Icon>站点设置</Menu-item>
     </Menu>
