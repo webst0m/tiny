@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Services;
 
 use App\Models\Category;
-
 class CategoryService
 {
-
     // todo cache
     public function getAllByType($type)
     {
@@ -18,11 +15,11 @@ class CategoryService
             $canAccessCategoryIDs = collect([]);
         }
         $topicCategories = Category::topCategories()->ordered()->oldest()->get();
-        foreach($topicCategories as $k=>$topicCategory) {
+		/*foreach($topicCategories as $k=>$topicCategory) {
             if(!$isSuperAdmin && !$canAccessCategoryIDs->contains($topicCategory->id)){
                 $topicCategories->splice($k ,1);
             }
-        }
+        }*/
         $topicCategories->load(['children' => function ($query) use ($type) {
             $query->byType($type)->ordered()->oldest();
         }]);
@@ -32,17 +29,20 @@ class CategoryService
             });
         }
         
-        foreach($topicCategories as $topicCategory) {
+		
+        foreach($topicCategories as $key=>$topicCategory) {
+			if(!$isSuperAdmin && !$canAccessCategoryIDs->contains($topicCategory->id)){
+                unset($topicCategories[$key]);
+            }
             foreach ($topicCategory->children as $k=>$child){
                 if(!$isSuperAdmin && !$canAccessCategoryIDs->contains($child->id)){
-                    $topicCategory->children->splice($k ,1);
+                    //$topicCategory->children->splice($k ,1);
+					unset($topicCategory->children[$k]);
                 } 
             }
         }
-
         return $topicCategories;
     }
-
     public function visualOutput($type = null, $indentStr = '-')
     {
         $topicCategories = $this->getAllByType($type);
