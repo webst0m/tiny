@@ -81,7 +81,7 @@ class Navigation
         // 这里不直接 return $this->activeTopNav->children() 的原因是为了从缓存中获取数据
         $activeTopNav = $this->getAllNav()->where('id', $this->activeTopNav->id)->first();
         if (!is_null($activeTopNav)) {
-            return $activeTopNav->children;
+            return $activeTopNav->children()->ordered()->oldest()->get();
         } else {
             return collect();
         }
